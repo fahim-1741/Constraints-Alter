@@ -1,0 +1,52 @@
+DROP DATABASE IF EXISTS library_lab; 
+CREATE DATABASE library_lab; 
+USE library_lab; 
+ 
+CREATE TABLE MEMBER ( 
+    MemberID INT PRIMARY KEY, 
+    FullName VARCHAR(30) NOT NULL, 
+    Email VARCHAR(80) NOT NULL UNIQUE, 
+    Age INT CHECK (Age >= 12), 
+    Phone VARCHAR(20) NOT NULL DEFAULT 'N/A' 
+) ENGINE=InnoDB; 
+ 
+CREATE TABLE BOOK ( 
+    BookID INT PRIMARY KEY, 
+    Title VARCHAR(80) NOT NULL, 
+    ISBN VARCHAR(50) NOT NULL UNIQUE, 
+    Price DECIMAL(8,6) CHECK (Price >= 0), 
+    Availability ENUM('AVAILABLE','BORROWED') DEFAULT 'AVAILABLE' 
+) ENGINE=InnoDB; 
+ 
+CREATE TABLE BORROW ( 
+    LoanID INT PRIMARY KEY, 
+    MemberID INT, 
+    BookID INT, 
+    FOREIGN KEY (MemberID) REFERENCES MEMBER(MemberID), 
+    FOREIGN KEY (BookID) REFERENCES BOOK(BookID) 
+) ENGINE=InnoDB; 
+ 
+INSERT INTO MEMBER (MemberID, FullName, Email, Age, Phone) VALUES 
+(1,'jayda','jayda@gmail.com',25,'01721549'), 
+(2,'ediya','ediya@gmail.com',22,'01976542'), 
+(3,'rohim','rohim@gmail.com',29,'01658133'), 
+(4,'rohan','rohan@gmail.com',22,'0142454'), 
+(5,'Sajid','sajid@gmail.com',20,'01523645'); 
+ 
+INSERT INTO BOOK (BookID, Title, ISBN, Price, Availability) VALUES 
+(11,'Db','jhsgfgfhj1',650,'AVAILABLE'), 
+(12,'php','ISfif2',950,'AVAILABLE'), 
+(13,'pyhton','jcbhj',2500,'AVAILABLE'), 
+(14,'oop','dfojd',599,'AVAILABLE'), 
+(15,'cp','ISurc',999,'INAVAILABLE'); 
+ 
+INSERT INTO BORROW (LoanID, MemberID, BookID) VALUES 
+(1,1,11), 
+(2,2,12), 
+(3,3,13), 
+(4,4,14), 
+(5,5,15), 
+(6,1,12); 
+ 
+SELECT * FROM MEMBER; SELECT * FROM BOOK; 
+SELECT * FROM BORROW; 
